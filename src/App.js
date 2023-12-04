@@ -1,22 +1,29 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 
 function App() {
+
   const [data, setData] = useState(null);
-  useEffect(() => {
+
+  useState(() => {
+    getData();
+  }, data);
+
+  function getData(){
     fetch(
       `http://localhost:8080/rest/pets`
     )
     .then((response) => response.json())
     .then(setData);
-  }, []);
+  }
+  
 
   const handleDelete = (id) => () => {
     fetch(`http://localhost:8080/rest/pets/${id}`, { method: 'DELETE', mode: 'cors' })
-
+    .then(getData())
+    .then(setData);
   }
-
 
   if (data) {
     return(
