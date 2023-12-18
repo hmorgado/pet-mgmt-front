@@ -1,28 +1,26 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
+
+function getPets(){
+  return fetch(
+      `http://localhost:8080/rest/pets`
+    ).then((response) => response.json())
+}
 
 function App() {
 
   const [data, setData] = useState(null);
 
-  useState(() => {
-    getData();
-  }, data);
-
-  function getData(){
-    fetch(
-      `http://localhost:8080/rest/pets`
-    )
-    .then((response) => response.json())
-    .then(setData);
-  }
+  useEffect(() => {
+    getPets().then(setData);
+  }, []);
   
 
-  const handleDelete = (id) => () => {
-    fetch(`http://localhost:8080/rest/pets/${id}`, { method: 'DELETE', mode: 'cors' })
-    .then(getData())
-    .then(setData);
+  const handleDelete = async (id) => {
+    await fetch(`http://localhost:8080/rest/pets/${id}`, { method: 'DELETE', mode: 'cors' })
+    const data = await getPets()
+    setData(data)
   }
 
   if (data) {
@@ -30,7 +28,7 @@ function App() {
       <div className="Pet">
       {data.map((pet) => (
         <h1 key={pet.id}>{pet.id} {pet.name} 
-          <button onClick={handleDelete(pet.id)}>
+          <button onClick={() => handleDelete(pet.id)}>
           delete
           </button>
         </h1>
