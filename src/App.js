@@ -1,5 +1,6 @@
 import "./App.css";
 import { useState, useEffect } from "react";
+import MyForm from "./MyForm";
 
 
 function getPets() {
@@ -9,20 +10,22 @@ function getPets() {
 }
 
 function App() {
-
   const [data, setData] = useState(null);
 
   useEffect(() => {
     getPets().then(setData);
   }, []);
 
+  async function getAndUpdatePetData() {
+    const data = await getPets()
+    setData(data)
+  }
 
   const handleDelete = async (id) => {
     await fetch(`http://localhost:8080/rest/pets/${id}`,
       { method: 'DELETE', mode: 'cors' }
     )
-    const data = await getPets()
-    setData(data)
+    getAndUpdatePetData();
   }
 
   if (data) {
@@ -51,6 +54,7 @@ function App() {
             ))}
           </tbody>
         </table>
+        <MyForm onFormSubmit={getAndUpdatePetData} />
       </div>
     )
   }
