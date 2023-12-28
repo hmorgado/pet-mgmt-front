@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Formik, Field, Form } from 'formik';
 import { useState } from 'react';
 import axios from 'axios';
@@ -7,6 +7,18 @@ import { object, string, number, date, InferType } from 'yup';
 const petSchema = object({
     petName: string().required('please name your pet'),
 });
+
+function getPetTypesAxios() {
+    return axios.get('http://localhost:8080/rest/petTypes')
+}
+
+function getPetTypes() {
+    console.log('called getPetTypes()')
+    return fetch(
+        `http://localhost:8080/rest/petTypes`
+    ).then((response) => response.json())
+}
+
 function MyForm(props) {
     const [submitResult, setSubmitResult] = useState(null);
 
@@ -18,7 +30,6 @@ function MyForm(props) {
             }
         })
             .then((r) => {
-                console.log(r.status)
                 setSubmitResult(true)
                 props.onFormSubmit();
             })
@@ -28,6 +39,14 @@ function MyForm(props) {
                 setSubmitResult(false)
             })
     }
+
+    const [petTypes, setPetTypes] = useState(null)
+
+    useEffect(() => {
+        getPetTypes().then(setPetTypes)
+    }, [])
+
+    console.log('pet types - ', petTypes)
 
     return (
         <div>
@@ -40,25 +59,22 @@ function MyForm(props) {
                 validationSchema={petSchema}
                 onSubmit={(values) => addPet(values)}
             >
-                {({errors, touched}) => (<Form>
+                {({ errors, touched }) => (<Form>
                     <label htmlFor="petName">Pet Name   </label>
                     <Field id="petName" name="petName"></Field>
                     {errors.petName && touched.petName && <div>{errors.petName}</div>}
                     <br />
                     <label htmlFor="petName">
                         Pet Type
-                        <label>
-                            <Field type="radio" name="petTypeId" value="1" />
-                            Bird
-                        </label>
-                        <label>
-                            <Field type="radio" name="petTypeId" value="2" />
-                            Cat
-                        </label>
-                        <label>
-                            <Field type="radio" name="petTypeId" value="3" />
-                            Dog
-                        </label>
+                        {
+                            petTypes ?
+                                petTypes.map((p) => (
+                                    <label key={p.id}>
+                                        <Field type="radio" name="petTypeId" value={p.id.toString()} />
+                                        {p.name}
+                                    </label>
+                                )) : <p>no pet types atm</p>
+                        }
                         <br />
                         <button type="submit">Submit</button>
                         <br />
