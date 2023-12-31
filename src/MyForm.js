@@ -3,12 +3,26 @@ import { Formik, Field, Form } from 'formik';
 import { useState } from 'react';
 import axios from 'axios';
 import { object, string, number, date, InferType } from 'yup';
+import ReusableMessage from './ReusableMessage';
+
+
+const ReusableMessageOld = ({ text = "nothing passed", statusFunc, status }) => {
+    if (status) {
+        return (
+            <div>
+                <button onClick={() => statusFunc(null)}> {text} (X)</button>
+            </div >
+        )
+    }
+}
+
 
 const petSchema = object({
     petName: string().required('please name your pet'),
 });
 
 function getPetTypesAxios() {
+    // figure this out
     return axios.get('http://localhost:8080/rest/petTypes')
 }
 
@@ -81,19 +95,13 @@ function MyForm(props) {
                         <br />
                     </label> <br />
                 </Form>)}
-
             </Formik>
-            msg here:
             {
                 (submitResult == null) ? <p /> :
-                    (submitResult) ? <p>
-                        added ok
-                        <button onClick={() => setSubmitResult(null)}>close</button>
-                    </p> :
-                        <p>
-                            something happened
-                            <button onClick={() => setSubmitResult(null)}>close</button>
-                        </p>
+                    (submitResult) ?
+                        <ReusableMessage text="Add worked!" statusFunc={setSubmitResult} status={true} />
+                        :
+                        <ReusableMessage text="Oops! Something went wrong" statusFunc={setSubmitResult} status={true} />
             }
         </div>
 

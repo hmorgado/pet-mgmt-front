@@ -58,7 +58,7 @@ function App() {
       </div>
     )
   }
-  return <h1>no kitties came back</h1>;
+  return <h1>loading...</h1>;
 }
 
 export default App;
