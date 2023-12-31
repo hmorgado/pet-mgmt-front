@@ -2,20 +2,8 @@ import React, { useEffect } from 'react';
 import { Formik, Field, Form } from 'formik';
 import { useState } from 'react';
 import axios from 'axios';
-import { object, string, number, date, InferType } from 'yup';
+import { object, string, number, obj } from 'yup';
 import ReusableMessage from './ReusableMessage';
-
-
-const ReusableMessageOld = ({ text = "nothing passed", statusFunc, status }) => {
-    if (status) {
-        return (
-            <div>
-                <button onClick={() => statusFunc(null)}> {text} (X)</button>
-            </div >
-        )
-    }
-}
-
 
 const petSchema = object({
     petName: string().required('please name your pet'),
@@ -99,9 +87,9 @@ function MyForm(props) {
             {
                 (submitResult == null) ? <p /> :
                     (submitResult) ?
-                        <ReusableMessage text="Add worked!" statusFunc={setSubmitResult} status={true} />
+                        <ReusableMessage text="Add worked!" statusFunc={setSubmitResult}  />
                         :
-                        <ReusableMessage text="Oops! Something went wrong" statusFunc={setSubmitResult} status={true} />
+                        <ReusableMessage text="Oops! Something went wrong" statusFunc={setSubmitResult} />
             }
         </div>
 
