@@ -31,7 +31,7 @@ function App() {
   if (data) {
     return (
       <div class="pet-list" className="Pet">
-      <div class="outer"><div class="box">Kitty management website</div></div>
+      <div class="outer"><div class="box">Pet management website</div></div>
         <table>
           <thead>
             <tr>
