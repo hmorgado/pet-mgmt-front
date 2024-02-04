@@ -1,3 +1,60 @@
+html{
+  background-color: chocolate;
+}
+
+tbody {
+  font-weight: bold;
+}
+
+.outer {
+  border: 5px solid black;
+}
+
+.box {
+  padding: 50px;
+  width: calc(50%);
+  background-color: rebeccapurple;
+  color: white;
+  text-align: center;
+}
+
+.bt-del {
+  color: red;
+  font-weight: bold;
+}
+
+.bt-sbt {
+  color: green;
+  font-weight: bold;
+}
+
+.pet-add {
+  background-color: aqua;
+  text-transform: uppercase;
+}
+
+.pet-list {
+  background-color: chocolate;
+}
+
+label {
+  text-decoration-line: underline;
+}
+
+th {
+  font-family: monospace;
+  font-size: xx-large;
+  color: sienna;
+}
+
+h1 {
+  color: rgb(8, 0, 244);
+}
+
+
+
+/* -------------------- */
+
 .App {
   text-align: center;
 }

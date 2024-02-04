@@ -51,7 +51,7 @@ function MyForm(props) {
     console.log('pet types - ', petTypes)
 
     return (
-        <div>
+        <div class="pet-add">
             <h1>Add Pet</h1>
             <Formik
                 initialValues={{
@@ -78,7 +78,7 @@ function MyForm(props) {
                                 )) : <p>no pet types atm</p>
                         }
                         <br />
-                        <button type="submit">Submit</button>
+                        <button class="bt-sbt" type="submit">Submit</button>
                         <br />
                         <br />
                     </label> <br />

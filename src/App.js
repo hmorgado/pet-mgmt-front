@@ -30,7 +30,8 @@ function App() {
 
   if (data) {
     return (
-      <div className="Pet">
+      <div class="pet-list" className="Pet">
+      <div class="outer"><div class="box">Kitty management website</div></div>
         <table>
           <thead>
             <tr>
@@ -46,7 +47,7 @@ function App() {
                 <td>{pet.name}</td>
                 <td>{pet.petType.name}</td>
                 <td>
-                  <button onClick={() => handleDelete(pet.id)}>
+                  <button class="bt-del" onClick={() => handleDelete(pet.id)}>
                     {"<- Delete"}
                   </button>
                 </td>
