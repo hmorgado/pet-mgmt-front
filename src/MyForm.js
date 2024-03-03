@@ -9,19 +9,13 @@ const petSchema = object({
     petName: string().required('please name your pet'),
 });
 
-function getPetTypesAxios() {
-    // figure this out
-    return axios.get('http://localhost:8080/rest/petTypes')
-}
-
-function getPetTypes() {
-    console.log('called getPetTypes()')
-    return fetch(
-        `http://localhost:8080/rest/petTypes`
-    ).then((response) => response.json())
+async function getPetTypes() {
+    const { data } = await axios.get('http://localhost:8080/rest/petTypes')
+    return data
 }
 
 function MyForm(props) {
+
     const [submitResult, setSubmitResult] = useState(null);
 
     async function addPet(values) {
@@ -47,8 +41,6 @@ function MyForm(props) {
     useEffect(() => {
         getPetTypes().then(setPetTypes)
     }, [])
-
-    console.log('pet types - ', petTypes)
 
     return (
         <div class="pet-add">
