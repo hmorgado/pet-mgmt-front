@@ -21,10 +21,8 @@ function App() {
     setData(data)
   }
 
-  const handleDelete = async (id) => {
-    await fetch(`http://localhost:8080/rest/pets/${id}`,
-      { method: 'DELETE', mode: 'cors' }
-    )
+  async function handleDelete(id) {
+    await axios.delete(`http://localhost:8080/rest/pets/${id}`)
     getAndUpdatePetData();
   }
 
