@@ -1,12 +1,12 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import MyForm from "./MyForm";
+import axios from 'axios';
 
 
-function getPets() {
-  return fetch(
-    `http://localhost:8080/rest/pets`
-  ).then((response) => response.json())
+async function getPets() {
+  const { data } = await axios.get(`http://localhost:8080/rest/pets`)
+  return data;
 }
 
 function App() {
